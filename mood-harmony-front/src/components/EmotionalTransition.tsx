@@ -18,6 +18,7 @@ interface TransitionPhase {
 interface EmotionalTransitionProps {
   fromEmotion?: Emotion | null;
   targetEmotion?: Emotion | null;
+  duration?: number | null;
   onTransitionStop?: () => void;
 }
 

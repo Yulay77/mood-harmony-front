@@ -9,15 +9,16 @@ import Navigation from '../components/Navigation';
 import EmotionalTransition from '../components/EmotionalTransition';
 import PathChoice from '../components/PathChoice';
 import TargetEmotionSelector from '../components/TargetEmotionSelector';
+import TransitionDurationSelector from '../components/TransitionDurationSelector';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Image from 'next/image';
-
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('emotions');
   const [selectedEmotion, setSelectedEmotion] = useState<Emotion | null>(null);
   const [targetEmotion, setTargetEmotion] = useState<Emotion | null>(null);
+  const [transitionDuration, setTransitionDuration] = useState<number | null>(null);
   const [pathChoice, setPathChoice] = useState<'adapt' | 'transition' | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrack, setCurrentTrack] = useState(sampleTracks[0]);
@@ -27,6 +28,7 @@ const Index = () => {
     setSelectedEmotion(emotion);
     setPathChoice(null);
     setTargetEmotion(null);
+    setTransitionDuration(null);
     setIsTransitionActive(false);
     console.log(`Selected emotion: ${emotion.name} with intensity ${emotion.intensity}`);
   };
@@ -56,6 +58,11 @@ const Index = () => {
   
   const handleTargetEmotionSelect = (emotion: Emotion) => {
     setTargetEmotion(emotion);
+    // Ne pas activer la transition encore, attendre la sélection de la durée
+  };
+  
+  const handleDurationSelect = (duration: number) => {
+    setTransitionDuration(duration);
     setIsTransitionActive(true);
     setActiveTab('transitions');
   };
@@ -64,6 +71,7 @@ const Index = () => {
     setSelectedEmotion(null);
     setPathChoice(null);
     setTargetEmotion(null);
+    setTransitionDuration(null);
     setIsTransitionActive(false);
     setActiveTab('emotions');
   };
@@ -87,6 +95,7 @@ const Index = () => {
   const handleTransitionStop = () => {
     setSelectedEmotion(null);
     setTargetEmotion(null);
+    setTransitionDuration(null);
     setPathChoice(null);
     setIsTransitionActive(false);
     setActiveTab('emotions');
@@ -123,6 +132,18 @@ const Index = () => {
                 fromEmotion={selectedEmotion}
                 onTargetSelect={handleTargetEmotionSelect}
                 onBack={() => setPathChoice(null)}
+              />
+            </div>
+          );
+        } else if (pathChoice === 'transition' && targetEmotion && !transitionDuration) {
+          // Nouvelle étape : sélection de la durée
+          return (
+            <div className="max-w-3xl mx-auto">
+              <TransitionDurationSelector
+                fromEmotion={selectedEmotion}
+                targetEmotion={targetEmotion}
+                onDurationSelect={handleDurationSelect}
+                onBack={() => setTargetEmotion(null)}
               />
             </div>
           );
@@ -199,13 +220,21 @@ const Index = () => {
           <div className="max-w-4xl mx-auto">
             <div className="flex justify-between items-center mb-8">
               <h1 className="text-2xl font-bold">Transitions émotionnelles</h1>
-              <Button onClick={handleBackToEmotions}>
-                Nouvelle transition
-              </Button>
+              <div className="flex items-center gap-4">
+                {transitionDuration && (
+                  <div className="text-sm text-muted-foreground">
+                    Durée: {transitionDuration} minutes
+                  </div>
+                )}
+                <Button onClick={handleBackToEmotions}>
+                  Nouvelle transition
+                </Button>
+              </div>
             </div>
             <EmotionalTransition 
               fromEmotion={selectedEmotion}
               targetEmotion={targetEmotion}
+              duration={transitionDuration}
               onTransitionStop={handleTransitionStop}
             />
           </div>
