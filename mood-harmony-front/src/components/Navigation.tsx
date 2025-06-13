@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { cn } from '../lib/utils';
 import { Music, Activity, Calendar, BarChart } from 'lucide-react';
@@ -18,7 +17,7 @@ export default function Navigation({ activeTab, onTabChange }: NavigationProps) 
   
   return (
     <div className="flex justify-center mb-8">
-      <div className="flex gap-2 p-1 bg-muted/50 rounded-full">
+      <div className="flex gap-2 p-1 bg-therapy-soft-blue rounded-full">
         {tabs.map((tab) => {
           const isActive = activeTab === tab.id;
           return (
@@ -28,8 +27,8 @@ export default function Navigation({ activeTab, onTabChange }: NavigationProps) 
               className={cn(
                 "flex items-center gap-2 px-4 py-2 rounded-full transition-all text-sm md:text-base",
                 isActive 
-                  ? "bg-white dark:bg-slate-800 text-therapy-dark-purple font-medium shadow-sm" 
-                  : "text-muted-foreground hover:text-foreground"
+                  ? "bg-white text-black font-medium shadow-sm" 
+                  : "text-black"
               )}
             >
               <tab.icon className="w-4 h-4" />

@@ -61,13 +61,12 @@
         "zod": "^3.23.8"
     },
     "devDependencies": {
-        "@tailwindcss/postcss": "^4.1.10",
         "@types/node": "^20",
         "@types/react": "^19",
         "@types/react-dom": "^19",
         "autoprefixer": "^10.4.0",
         "postcss": "^8.4.0",
-        "tailwindcss": "^4.1.10",
+        "tailwindcss": "^3.3.0",
         "typescript": "^5"
     }
 }

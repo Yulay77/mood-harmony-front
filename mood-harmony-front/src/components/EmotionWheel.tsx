@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { emotions, Emotion } from '../data/emotions';
 import { cn } from '../lib/utils';
@@ -23,45 +22,45 @@ export default function EmotionWheel({ onEmotionSelect, selectedEmotion }: Emoti
             {selectedEmotion ? selectedEmotion.name : hoveredEmotion ? hoveredEmotion.name : ""}
           </span>
         </div>
-        
+
         <div className="relative w-full h-full">
-          {emotions.map((emotion, index) => {
-            const angle = index * anglePerEmotion;
-            const radians = (angle - 90) * (Math.PI / 180);
+        {emotions.map((emotion, index) => {
+          const angle = index * anglePerEmotion;
+          const radians = (angle - 90) * (Math.PI / 180);
             const radius = 42; // percentage from center
-            
+
             // Calculate position on the wheel
-            const x = 50 + radius * Math.cos(radians);
-            const y = 50 + radius * Math.sin(radians);
-            
+          const x = 50 + radius * Math.cos(radians);
+          const y = 50 + radius * Math.sin(radians);
+
             // Determine if this emotion is selected
-            const isSelected = selectedEmotion?.id === emotion.id;
-            
-            return (
-              <div 
-                key={emotion.id}
-                className={cn(
+          const isSelected = selectedEmotion?.id === emotion.id;
+
+          return (
+            <div
+              key={emotion.id}
+              className={cn(
                   "emotion-wheel-segment absolute w-20 h-20 -translate-x-1/2 -translate-y-1/2 rounded-full flex flex-col items-center justify-center cursor-pointer",
-                  emotion.color,
-                  isSelected ? "ring-4 ring-primary shadow-lg scale-110" : "",
-                  hoveredEmotion?.id === emotion.id ? "scale-105" : ""
-                )}
-                style={{
-                  left: `${x}%`,
-                  top: `${y}%`,
-                }}
-                onClick={() => onEmotionSelect(emotion)}
-                onMouseEnter={() => setHoveredEmotion(emotion)}
-                onMouseLeave={() => setHoveredEmotion(null)}
-              >
-                <div className="text-3xl">{emotion.icon}</div>
-                <div className="text-xs font-medium mt-1 text-foreground">{emotion.name}</div>
-              </div>
-            );
-          })}
+                emotion.color,
+                isSelected ? "ring-4 ring-primary shadow-lg scale-110" : "",
+                hoveredEmotion?.id === emotion.id ? "scale-105" : ""
+              )}
+              style={{
+                left: `${x}%`,
+                top: `${y}%`,
+              }}
+              onClick={() => onEmotionSelect(emotion)}
+              onMouseEnter={() => setHoveredEmotion(emotion)}
+              onMouseLeave={() => setHoveredEmotion(null)}
+            >
+              <div className="text-3xl">{emotion.icon}</div>
+              <div className="text-xs font-medium mt-1 text-foreground">{emotion.name}</div>
+            </div>
+          );
+        })}
         </div>
       </div>
-      
+
       {/* Emotion description */}
       <div className="mt-6 text-center">
         {selectedEmotion && (

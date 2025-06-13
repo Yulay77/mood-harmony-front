@@ -11,7 +11,8 @@ import PathChoice from '../components/PathChoice';
 import TargetEmotionSelector from '../components/TargetEmotionSelector';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Music as MusicIcon } from 'lucide-react';
+import Image from 'next/image';
+
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('emotions');
@@ -218,14 +219,17 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-border py-4">
-        <div className="container flex items-center justify-between">
+        <div className="container flex items-center justify-center">
           <div className="flex items-center gap-2">
-            <MusicIcon className="w-6 h-6 text-therapy-purple" />
-            <span className="font-bold text-lg">Deezer Therapy</span>
+            <Image 
+              src="/logo_deezer.svg"
+              alt="Deezer Logo"
+              width={24}
+              height={24}
+              className="text-therapy-purple"
+            />
+            <span className="font-bold text-lg">Mood Harmony</span>
           </div>
-          <Button>
-            Premium
-          </Button>
         </div>
       </header>
       
